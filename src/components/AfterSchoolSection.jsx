@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState } from "react";
 import { Search, CheckCircle2 } from "lucide-react";
 import { COLORS, F_DISPLAY, F_BODY, F_MONO } from "../theme";
@@ -12,13 +13,17 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
 
     const q = query.toLowerCase();
     return schools.filter((s) =>
-      // Use optional chaining s?.schoolName and fallback to empty string ""
       (s?.schoolName || "").toLowerCase().includes(q)
     );
   }, [query, schools]);
 
   return (
-    <section style={{ background: COLORS.paperDim, padding: "72px 20px" }}>
+    <section
+      style={{
+        background: COLORS.paperDim,
+        padding: "72px 20px",
+      }}
+    >
       <div
         style={{
           maxWidth: 1080,
@@ -40,6 +45,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
           >
             AFTER SCHOOL PICK UP
           </span>
+
           <h2
             style={{
               fontFamily: F_DISPLAY,
@@ -51,6 +57,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
           >
             Afterschool Pickup
           </h2>
+
           <p
             style={{
               fontFamily: F_BODY,
@@ -81,11 +88,13 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
                 label="Cost"
                 value={`${pickup.recurringFee} / ${pickup.billingCycle}`}
               />
+
               <PriceStat
                 label="Includes"
                 value="Homework help only"
                 mono={false}
               />
+
               <PriceStat
                 label="Availability"
                 value={pickup.frequency}
@@ -101,6 +110,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
             border: `1px solid ${COLORS.line}`,
             borderRadius: 14,
             padding: 22,
+            minWidth: 0,
           }}
         >
           <div
@@ -115,7 +125,13 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
           >
             Check your school
           </div>
-          <div style={{ position: "relative", marginBottom: 16 }}>
+
+          <div
+            style={{
+              position: "relative",
+              marginBottom: 16,
+            }}
+          >
             <Search
               size={16}
               color={COLORS.slate}
@@ -126,6 +142,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
                 transform: "translateY(-50%)",
               }}
             />
+
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -142,6 +159,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
               }}
             />
           </div>
+
           <div
             style={{
               maxHeight: 260,
@@ -162,10 +180,12 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
                 No matching schools. Call or text Ms V to ask about your school.
               </p>
             )}
+
             {filtered.map((s, idx) => {
               const eligible = String(s?.eligible || "")
                 .toLowerCase()
                 .startsWith("y");
+
               return (
                 <div
                   key={s?.schoolName || idx}
@@ -192,6 +212,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
                     >
                       {s?.schoolName || "Unknown School"}
                     </div>
+
                     <div
                       style={{
                         fontFamily: F_BODY,
@@ -202,6 +223,7 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
                       {s?.district || ""}
                     </div>
                   </div>
+
                   {eligible ? (
                     <span
                       style={{
@@ -234,8 +256,121 @@ export default function AfterSchoolSection({ pickup, schools = [] }) {
               );
             })}
           </div>
+
+          {/* FORM + QR CODE */}
+          <div
+            style={{
+              marginTop: 22,
+              paddingTop: 20,
+              borderTop: `1px solid ${COLORS.line}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 20,
+              flexWrap: "wrap",
+            }}
+          >
+            {/* Form link */}
+            <div
+              style={{
+                flex: "1 1 220px",
+                minWidth: 0,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: F_MONO,
+                  fontSize: 11,
+                  color: COLORS.slate,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: 8,
+                }}
+              >
+                Ready to get started?
+              </div>
+
+              <p
+                style={{
+                  fontFamily: F_BODY,
+                  fontSize: 13.5,
+                  color: COLORS.slate,
+                  lineHeight: 1.5,
+                  margin: "0 0 12px",
+                }}
+              >
+                Complete the form to register for afterschool pickup.
+              </p>
+
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSc-e4tVZqgSRRFhRA7hoY0Iw5Y3GotKmjk-y3VA7Q3nyLzfrg/viewform?usp=publish-editor"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-block",
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "11px 18px",
+                  background: COLORS.teal,
+                  color: "#fff",
+                  borderRadius: 9,
+                  fontFamily: F_BODY,
+                  fontSize: 14,
+                  fontWeight: 600,
+                  textAlign: "center",
+                  textDecoration: "none",
+                }}
+              >
+                Apply for Afterschool Pickup
+              </a>
+            </div>
+
+            {/* QR Code */}
+            <div
+              style={{
+                flex: "0 1 130px",
+                width: "130px",
+                textAlign: "center",
+              }}
+            >
+              <img
+                src="/AfterSchoolPIckUpQR.png"
+                alt="QR code for afterschool pickup registration form"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  maxWidth: 130,
+                  height: "auto",
+                  margin: "0 auto 6px",
+                  borderRadius: 6,
+                }}
+              />
+
+              <span
+                style={{
+                  fontFamily: F_MONO,
+                  fontSize: 9.5,
+                  color: COLORS.slate,
+                  lineHeight: 1.3,
+                }}
+              >
+                SCAN TO REGISTER
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Responsive styles */}
+      <style>
+        {`
+          @media (max-width: 760px) {
+            .after-school-responsive-grid {
+              grid-template-columns: 1fr !important;
+            }
+          }
+        `}
+      </style>
     </section>
   );
 }
